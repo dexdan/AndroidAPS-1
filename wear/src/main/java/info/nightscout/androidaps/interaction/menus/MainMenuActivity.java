@@ -46,10 +46,10 @@ public class MainMenuActivity extends MenuListActivity {
         boolean showWizard = sp.getBoolean("showWizard", true);
 
         Vector<String> menuitems = new Vector<String>();
-        menuitems.add(getString(R.string.menu_tempt));
-        if (showWizard) menuitems.add(getString(R.string.menu_wizard));
-        menuitems.add(getString(R.string.menu_ecarb));
         menuitems.add(getString(R.string.menu_bolus));
+        if (showWizard) menuitems.add(getString(R.string.menu_wizard));        
+        menuitems.add(getString(R.string.menu_tempt));
+        menuitems.add(getString(R.string.menu_ecarb));
         menuitems.add(getString(R.string.menu_settings));
         menuitems.add(getString(R.string.menu_status));
         if (showPrimeFill) menuitems.add(getString(R.string.menu_prime_fill));

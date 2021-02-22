@@ -1074,14 +1074,14 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
             // bolus 1/2 the insulinReq, up to maxBolus, rounding down to nearest bolus increment
             var roundSMBTo = 1 / profile.bolus_increment;
 
-            //DEadd section 19/2/21 to adjust max SMB multiplier
+            //DEadd section 19/2/21 to adjust max SMB multiplier (tweak 22/2/21 to add COB/bg extra safety)
             var deMaxMicroBolusMultiplier = 0.5;
             var deTimeNow = new Date();
-            if (deTimeNow.getHours() > 17 && (deTimeNow.getHours() < 24)) {
-            //in schedule 18:00-00:00 for higher minima SMB
+            if (deTimeNow.getHours() > 17 && deTimeNow.getHours() < 24 && bg > 4*18 && meal_data.mealCOB) {
+            //in schedule 18:00-00:00 for higher minima SMB, and BG > 4mmol and COB present
                 var deMaxMicroBolusMultiplier = 0.75;
             }
-            console.error("deTimeNow:",deTimeNow,"Hours:",deTimeNow.getHours(),"deMaxMicroBolusMultiplier:",deMaxMicroBolusMultiplier);
+            console.error("deTimeNow:",deTimeNow,"Hours:",deTimeNow.getHours(),"de bg used:",bg,"de cob used:",meal_data.mealCOB,"deMaxMicroBolusMultiplier:",deMaxMicroBolusMultiplier);
             var microBolus = Math.floor(Math.min(insulinReq*deMaxMicroBolusMultiplier,maxBolus)*roundSMBTo)/roundSMBTo; 
             // var microBolus = Math.floor(Math.min(insulinReq/2,maxBolus)*roundSMBTo)/roundSMBTo;
 
